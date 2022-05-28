@@ -2,6 +2,32 @@
   text-align: center;
 }
 
+*,
+:before,
+:after {
+  box-sizing: border-box;
+}
+
+body {
+  overflow: hidden;
+  font-family: sans-serif;
+}
+
+h2,
+h3,
+h4,
+h5 {
+  margin: 0;
+}
+
+.form-control {
+  display: block;
+  margin-bottom: 15px;
+  padding: 15px 10px;
+  border-radius: 5px;
+  border: 1px solid var(--charcoal);
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -26,6 +52,15 @@
 
 .App-link {
   color: #61dafb;
+}
+
+li {
+    text-align: left;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
 }
 
 @keyframes App-logo-spin {

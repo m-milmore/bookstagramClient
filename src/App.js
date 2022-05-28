@@ -1,25 +1,12 @@
+import React from "react";
 import "./App.css";
 
-function App() {
+const App = () => {
   return (
     <div className="App">
-      <header className="App-header">
-        <form action="">
-          <h2>TODO</h2>
-          <label htmlFor="">What needs to be done?</label>
-          <br />
-          <input type="text" />
-          <button>Add #!</button>
-          <ul>
-            <li>Item 1</li>
-            <li>Item 2</li>
-            <li>Item 3</li>
-            <li>Item 4</li>
-          </ul>
-        </form>
-      </header>
+      <header className="App-header">Hello</header>
     </div>
   );
-}
+};
 
 export default App;
