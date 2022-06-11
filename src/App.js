@@ -1,48 +1,35 @@
-import React, { useState, useEffect } from "react";
-import { AWSService } from "./awsService";
 import "./App.css";
-import ListAlbums from "./components/ListAlbums";
-
-const awsService = new AWSService();
-const bucketFolder = "album1";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import MainPage from "./components/MainPage/MainPage";
+import UserLogin from "./components/UserLogin/UserLogin";
+import UserCreate from "./components/UserCreate/UserCreate";
 
 const App = () => {
-  const [appState, setAppState] = useState({
-    photoUrls: [],
-    loading: false,
-    error: false,
-  });
-
-  useEffect(() => {
-    setAppState((prevState) => ({
-      ...prevState,
-      loading: true,
-    }));
-    awsService.viewAlbum(bucketFolder).then(
-      (res) => {
-        if (res) {
-          setAppState((prevState) => ({
-            ...prevState,
-            photoUrls: res.photoUrls,
-          }));
-        }
-        setAppState((prevState) => ({
-          ...prevState,
-          loading: false,
-        }));
-      },
-      (error) => {
-        setAppState((prevState) => ({
-          ...prevState,
-          error: true,
-        }));
-      }
-    );
-  }, []);
-
   return (
     <div className="App">
-      <ListAlbums appState={appState} />
+      <Router>
+        <div>
+          <nav>
+            <ul>
+              <li>
+                <Link to="/">Home</Link>
+              </li>
+              <li>
+                <Link to="/login">Login</Link>
+              </li>
+              <li>
+                <Link to="/register">Register</Link>
+              </li>
+            </ul>
+          </nav>
+
+          <Routes>
+            <Route path="/" element={<MainPage />} />
+            <Route path="/login" element={<UserLogin />} />
+            <Route path="/register" element={<UserCreate />} />
+          </Routes>
+        </div>
+      </Router>
     </div>
   );
 };

@@ -27,13 +27,13 @@ export class AWSService {
           if (err) {
             failure({ error: "There was an error viewing your album" });
           }
-          let photoUrls = data.Contents.map((photo) => {
-            const photoKey = photo.Key;
-            const photoUrl = href + encodeURIComponent(photoKey);
-            return photoUrl;
-          });
+          let photoUrls = data.Contents.map((photo) => ({
+            photoUrl: href + encodeURIComponent(photo.Key),
+            lastModified: photo.LastModified,
+            eTag: photo.ETag,
+          }));
           photoUrls = photoUrls.filter(
-            (photo) => photo.charAt(photo.length - 4) === "."
+            (photo) => photo.photoUrl.charAt(photo.photoUrl.length - 4) === "."
           );
           success({ photoUrls });
         });

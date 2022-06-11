@@ -1,26 +1,17 @@
 import React from "react";
+import ImageCard from "./ImageCard";
+import DetailPage from "./Utilities/DetailPage";
 
-const ListAlbums = ({ appState: { photoUrls: photos, loading, error } }) => {
+const ListAlbum = ({ appState: { photoUrls: photos, loading, error } }) => {
   return (
     <div className="container px-0">
       <h1 className="mb-5">Bookstagram</h1>
       <div className="row justify-content-center">
         {!loading ? (
           photos.length ? (
-            <div>
-              {photos.map((photo, i) => (
-                <img
-                  src={photo}
-                  style={{
-                    width: "200px",
-                    height: "256px",
-                    marginRight: "5px",
-                  }}
-                  key={i}
-                  alt="book"
-                />
-              ))}
-            </div>
+            photos.map((photo) => (
+              <ImageCard photo={photo} key={photo.eTag} />
+            ))
           ) : (
             <div>No pictures...</div>
           )
@@ -37,8 +28,11 @@ const ListAlbums = ({ appState: { photoUrls: photos, loading, error } }) => {
           "
         </h3>
       )}
+      {photos.map((photo) => (
+        <DetailPage photo={photo} key={photo.eTag} />
+      ))}
     </div>
   );
 };
 
-export default ListAlbums;
+export default ListAlbum;
