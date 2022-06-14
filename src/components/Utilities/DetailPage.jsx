@@ -39,6 +39,12 @@ const DetailPage = ({ photo }) => {
                 <div className="col-md-8">
                   <div className="card-body">
                     <h5 className="card-title">{title}</h5>
+                    <h6
+                      className="card-text m-0 p-0 mt-2 text-dark"
+                      style={{ fontWeight: "600" }}
+                    >
+                      {`ref: ${id}`}
+                    </h6>
                   </div>
                 </div>
               </div>

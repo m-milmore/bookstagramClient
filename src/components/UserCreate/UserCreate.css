@@ -1,0 +1,38 @@
+.avatar-container {
+  text-align: center;
+  margin: 20px 0 40px;
+}
+
+.avatar-icon {
+  max-width: 100px;
+}
+
+.avatar-border-radius {
+  border-radius: 50%;
+}
+
+.avatar-text {
+  color: var(--sky-blue);
+  transition: ease-in-out 0.2s;
+  line-height: 1.5;
+}
+
+.avatar-text:hover {
+  color: var(--sky-tint);
+  cursor: pointer;
+}
+
+.avatar-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.avatar-list .avatar-icon {
+  transition: ease-in-out 0.1s;
+  opacity: 0.8;
+}
+
+.avatar-list .avatar-icon:hover {
+  opacity: 1;
+  cursor: pointer;
+}
