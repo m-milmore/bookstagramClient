@@ -27,11 +27,6 @@ const AuthProvider = ({ children }) => {
   );
 };
 
-const PrivateRoute = ({ children, ...props }) => {
-  const context = useContext(UserContext);
-  return context.authService.isLoggedIn ? <Outlet/> : <Navigate to="/login" />;
-};
-
 const App = () => {
   return (
     <div className="container" style={{ textAlign: "center" }}>

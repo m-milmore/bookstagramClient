@@ -2,7 +2,6 @@ import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import "./UserCreate.css";
 import Modal from "../Modal/Modal";
-import { AVATARS } from "../../constants";
 import { AVATAR_COUNT } from "../../constants";
 import { UserContext } from "../../App";
 import { useLocation, useNavigate } from "react-router-dom";

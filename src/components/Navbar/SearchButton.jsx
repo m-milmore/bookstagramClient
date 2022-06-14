@@ -85,9 +85,6 @@ const SearchButton = ({ data }) => {
           </div>
         )}
       </div>
-      {data.map((photo) => (
-        <DetailPage photo={photo} key={photo.eTag} />
-      ))}
     </div>
   );
 };

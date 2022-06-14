@@ -3,7 +3,6 @@ import "./LoginSignupScreen.css";
 import { PASSWORD_RULES, EYE_ICONS } from "../../../constants";
 import RadioButtons from "./RadioButtons";
 import InputBase from "./InputBase";
-import Facebook from "./Facebook";
 import "bootstrap/dist/js/bootstrap.bundle";
 
 const INIT_STATE = {
@@ -462,13 +461,6 @@ class LoginSignupScreen extends React.Component {
                   )}
                   <button className="submit-button">{submitButton}</button>
                 </form>
-                <div className="hr-container">
-                  <hr />
-                  <span>or</span>
-                  <hr />
-                </div>
-                <Facebook handleFbUsername={this.handleFbUsername} />
-                <div>
                   <span
                     className="span-cancel"
                     data-bs-dismiss="modal"
@@ -486,7 +478,6 @@ class LoginSignupScreen extends React.Component {
               </div>
             </div>
           </div>
-        </div>
       </>
     );
   }
