@@ -1,17 +1,18 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./SearchButton.css";
-import DetailPage from "../Utilities/DetailPage";
 import { Modal } from "bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import { UserContext } from "../../App";
 
 library.add(faMagnifyingGlass);
 
-const SearchButton = ({ data }) => {
-  const products = data.map((product) => ({
-    title: product.title,
-    id: product.id,
+const SearchButton = () => {
+  const { books } = useContext(UserContext);
+  const products = books.map((book) => ({
+    title: book.title,
+    id: book.id,
   }));
   const [suggestions, setSuggestions] = React.useState([]);
   const [inputSearch, setInputSearch] = React.useState("");

@@ -1,12 +1,7 @@
 import React from "react";
 import "./DetailPage.css";
-import { extractTitleFromUrl } from "../../constants";
 
-const DetailPage = ({ photo }) => {
-  const { photoUrl, eTag } = photo;
-  const id = eTag.replace(/['"]+/g, "").slice(-6);
-  const title = extractTitleFromUrl(photoUrl);
-
+const DetailPage = ({ book: { id, user, title, photo } }) => {
   return (
     <div
       className="modal fade"
@@ -31,7 +26,7 @@ const DetailPage = ({ photo }) => {
               <div className="row g-0">
                 <div className="col-md-4 p-1">
                   <img
-                    src={photoUrl}
+                    src={photo}
                     className="img-fluid rounded-start"
                     alt="title"
                   />
@@ -43,7 +38,7 @@ const DetailPage = ({ photo }) => {
                       className="card-text m-0 p-0 mt-2 text-dark"
                       style={{ fontWeight: "600" }}
                     >
-                      {`ref: ${id}`}
+                      {`ref: ${user}`}
                     </h6>
                   </div>
                 </div>

@@ -14,13 +14,13 @@ const MainPage = ({ loading, error }) => {
       {error ? <Alert message={errMsg} type="alert-danger" /> : null}
       <div className="row justify-content-center">
         {books.length ? (
-          books.map((book) => <ImageCard book={book} key={book.id} />)
+          books.map((book) => <ImageCard book={book} key={book._id} />)
         ) : (
           <div>No pictures...</div>
         )}
       </div>
       {books.map((book) => (
-        <DetailPage book={book} key={book.id} />
+        <DetailPage book={book} key={book._id} />
       ))}
     </div>
   );

@@ -7,6 +7,8 @@ const URL_REGISTER = `${URL_AUTH}/register`;
 
 const URL_USER_BY_EMAIL = `${URL_AUTH}/`;
 
+const URL_BOOKS = `${BASE_URL}/books`;
+
 const headers = { "Content-Type": "application/json" };
 
 class User {
@@ -124,6 +126,32 @@ export class AuthService extends User {
       this.setUserData(response.data.data);
     } catch (error) {
       console.error(error);
+    }
+  }
+}
+
+export class BookService {
+  constructor() {
+    this.books = [];
+  }
+
+  getBooks() {
+    return this.books;
+  }
+
+  setBooks(books) {
+    this.books = books;
+  }
+
+  async getAllBooks() {
+    try {
+      const response = await axios.get(URL_BOOKS, { headers });
+      if (!!response) {
+        this.setBooks(response.data.data);
+      }
+    } catch (error) {
+      console.error(error);
+      throw error;
     }
   }
 }

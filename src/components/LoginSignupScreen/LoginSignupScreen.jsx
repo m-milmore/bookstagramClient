@@ -1,6 +1,6 @@
 import React from "react";
 import "./LoginSignupScreen.css";
-import { PASSWORD_RULES, EYE_ICONS } from "../../../constants";
+import { PASSWORD_RULES, EYE_ICONS } from "../../constants";
 import RadioButtons from "./RadioButtons";
 import InputBase from "./InputBase";
 import "bootstrap/dist/js/bootstrap.bundle";

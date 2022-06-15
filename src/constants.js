@@ -6,13 +6,6 @@ export const ALBUM_BUCKET_NAME = "mmci-album-01";
 export const BUCKET_REGION = "us-east-1";
 export const BUCKET_FOLDER = "album1";
 
-export const extractTitleFromUrl = (url) => {
-  let title = decodeURIComponent(url);
-  return title.slice(title.lastIndexOf("/") + 1, -4);
-};
-
-export const AVATAR_COUNT = 28;
-
 export const EYE_ICONS = {
   SHOW: EYE_ICON,
   HIDE: EYE_ICON_HIDE,

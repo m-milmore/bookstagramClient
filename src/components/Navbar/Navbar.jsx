@@ -1,7 +1,7 @@
 import React from "react";
-import BrandName from "./BrandName";
-import SearchButton from "./SearchButton";
-import LoginSignupScreen from "./LoginSignupScreen/LoginSignupScreen";
+import BrandName from "../BrandName/BrandName";
+import SearchButton from "../SearchButton/SearchButton";
+import LoginSignupScreen from "../LoginSignupScreen/LoginSignupScreen";
 
 const Navbar = () => {
   return (
