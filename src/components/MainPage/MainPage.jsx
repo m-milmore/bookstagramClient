@@ -1,38 +1,27 @@
-import React, { useState, useEffect } from "react";
-import { AWSService } from "../../awsService";
-import orderBy from "lodash.orderby";
-import "./MainPage.css";
-import Navbar from "../Navbar/Navbar";
-import ListAlbum from "./ListAlbum";
-import {BUCKET_FOLDER} from "../../constants";
+import React, { useContext } from "react";
+import Alert from "../Alert/Alert";
+import { UserContext } from "../../App";
+import ImageCard from "../ImageCard/ImageCard";
+import DetailPage from "../DetailPage/DetailPage";
 
-const awsService = new AWSService();
-const bucketFolder = BUCKET_FOLDER;
-
-const MainPage = () => {
-  const [photoUrls, setPhotoUrls] = useState([]);
-  const [error, setError] = useState(false);
-  const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    setLoading(true);
-    awsService.viewAlbum(bucketFolder).then(
-      (res) => {
-        if (res) {
-          setPhotoUrls(orderBy(res.photoUrls, ["lastModified"], ["asc"]));
-        }
-        setLoading(false);
-      },
-      (error) => {
-        setError(true);
-      }
-    );
-  }, []);
+const MainPage = ({ loading, error }) => {
+  const { books } = useContext(UserContext);
+  const errMsg = "Error loading images.";
 
   return (
-    <div>
-      <Navbar data={photoUrls} />
-      <ListAlbum photos={photoUrls} loading={loading} error={error} />
+    <div className="container px-0">
+      {loading ? <div>"Loading..."</div> : null}
+      {error ? <Alert message={errMsg} type="alert-danger" /> : null}
+      <div className="row justify-content-center">
+        {books.length ? (
+          books.map((book) => <ImageCard book={book} key={book.id} />)
+        ) : (
+          <div>No pictures...</div>
+        )}
+      </div>
+      {books.map((book) => (
+        <DetailPage book={book} key={book.id} />
+      ))}
     </div>
   );
 };

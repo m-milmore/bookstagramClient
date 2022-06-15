@@ -1,7 +1,7 @@
 import React from "react";
-import ImageCard from "./ImageCard";
+import ImageCard from "./ImageCard/ImageCard";
 import DetailPage from "../Utilities/DetailPage";
-import Alert from "../Alert/Alert";
+import Alert from "./Alert/Alert";
 
 const ListAlbum = ({ photos, loading, error }) => {
   const errMsg = "Error loading images.";
