@@ -1,54 +1,39 @@
-import React, { useState, useEffect, createContext } from "react";
+import React, { createContext } from "react";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+} from "react-router-dom";
 import { AuthService, BookService } from "./services";
-import orderBy from "lodash.orderby";
-import Navbar from "./components/Navbar/Navbar";
 import MainPage from "./components/MainPage/MainPage";
-import Alert from "./components/Alert/Alert";
+import ResetPassword from "./components/ResetPassword/ResetPassword"
 
 const authService = new AuthService();
 const bookService = new BookService();
 export const UserContext = createContext();
 
-const App = () => {
-  const [books, setBooks] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
-
+const AuthProvider = ({ children }) => {
   const context = {
     authService,
     bookService,
-    books,
   };
 
-  useEffect(() => {
-    // need the 2 setLoading(false), both in try & catch, so "no pictures" message not showing unnecessary
-    setLoading(true);
-    bookService
-      .getAllBooks()
-      .then(() => {
-        setBooks(orderBy(bookService.getBooks(), ["createAt"], ["asc"]));
-        setLoading(false);
-      })
-      .catch(() => {
-        setLoading(false);
-        setError(true);
-      });
-  }, []);
+  return (
+    <UserContext.Provider value={context}>{children}</UserContext.Provider>
+  );
+};
 
-  const errMsg = "Error loading images.";
-
+const App = () => {
   return (
     <div className="container" style={{ textAlign: "center" }}>
-      <UserContext.Provider value={context}>
-        <Navbar />
-        {loading ? (
-          <div>Loading...</div>
-        ) : error ? (
-          <Alert message={errMsg} type="my-alert-danger" />
-        ) : (
-          <MainPage />
-        )}
-      </UserContext.Provider>
+      <AuthProvider>
+        <Router>
+          <Routes>
+            <Route path="/" element={<MainPage />} />
+            <Route path="/resetpassword" element={<ResetPassword />} />
+          </Routes>
+        </Router>
+      </AuthProvider>
     </div>
   );
 };

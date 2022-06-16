@@ -1,24 +1,44 @@
-import React, { useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { UserContext } from "../../App";
-import ImageCard from "../ImageCard/ImageCard";
-import DetailPage from "../DetailPage/DetailPage";
+import orderBy from "lodash.orderby";
+import Navbar from "../Navbar/Navbar";
+import Alert from "../Alert/Alert";
+import Books from "../Books/Books";
 
-const MainPage = ({ loading, error }) => {
-  const { books } = useContext(UserContext);
+const MainPage = () => {
+  const {bookService} = useContext(UserContext)
+  const [books, setBooks] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+
+  useEffect(() => {
+    // need the 2 setLoading(false), both in try & catch, so "no pictures" message not showing unnecessary
+    setLoading(true);
+    bookService
+      .getAllBooks()
+      .then(() => {
+        setBooks(orderBy(bookService.getBooks(), ["createAt"], ["asc"]));
+        setLoading(false);
+      })
+      .catch(() => {
+        setLoading(false);
+        setError(true);
+      });
+  }, [bookService]);
+
+  const errMsg = "Error loading images.";
 
   return (
-    <div className="container px-0">
-      <div className="row justify-content-center">
-        {books.length ? (
-          books.map((book) => <ImageCard book={book} key={book._id} />)
-        ) : (
-          <div>No pictures...</div>
-        )}
-      </div>
-      {books.map((book) => (
-        <DetailPage book={book} key={book._id} />
-      ))}
-    </div>
+    <>
+      <Navbar books={books}/>
+      {loading ? (
+        <div>Loading...</div>
+      ) : error ? (
+        <Alert message={errMsg} type="my-alert-danger" />
+      ) : (
+        <Books books={books}/>
+      )}
+    </>
   );
 };
 

@@ -2,7 +2,6 @@ import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import "./UserCreate.css";
 import Modal from "../Modal/Modal";
-import { AVATAR_COUNT } from "../../constants";
 import { UserContext } from "../../App";
 import { useLocation, useNavigate } from "react-router-dom";
 import Alert from "../Alert/Alert";
@@ -114,7 +113,7 @@ const UserCreate = () => {
               <img src={img} alt="avatar" />
             </div>
           ))} */}
-          {Array.from({ length: AVATAR_COUNT }, (v, i) => (
+          {Array.from({ length: 28 }, (v, i) => (
             <div
               role="presentation"
               className="avatar-icon"

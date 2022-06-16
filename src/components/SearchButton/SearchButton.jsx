@@ -1,15 +1,13 @@
-import React, { useContext } from "react";
+import React from "react";
 import "./SearchButton.css";
 import { Modal } from "bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
-import { UserContext } from "../../App";
 
 library.add(faMagnifyingGlass);
 
-const SearchButton = () => {
-  const { books } = useContext(UserContext);
+const SearchButton = ({books}) => {
   const products = books.map((book) => ({
     title: book.title,
     id: book.id,
