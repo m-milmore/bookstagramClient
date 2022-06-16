@@ -1,11 +1,11 @@
 import React from "react";
 import "./DetailPage.css";
 
-const DetailPage = ({ book: { id, user, title, photo } }) => {
+const DetailPage = ({ book: { _id, title, photo } }) => {
   return (
     <div
       className="modal fade"
-      id={`id${id}`}
+      id={`id${_id}`}
       tabIndex="-1"
       aria-labelledby="modal-title"
       aria-hidden="true"
@@ -38,7 +38,7 @@ const DetailPage = ({ book: { id, user, title, photo } }) => {
                       className="card-text m-0 p-0 mt-2 text-dark"
                       style={{ fontWeight: "600" }}
                     >
-                      {`ref: ${user}`}
+                      {`ref: ${_id}`}
                     </h6>
                   </div>
                 </div>

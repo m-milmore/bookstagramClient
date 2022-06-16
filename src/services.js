@@ -7,6 +7,9 @@ const URL_REGISTER = `${URL_AUTH}/register`;
 
 const URL_USER_BY_EMAIL = `${URL_AUTH}/`;
 
+const URL_FORGOT_PASSWORD = `${URL_AUTH}/forgotpassword`;
+const URL_RESET_PASSWORD = `${URL_AUTH}/resetpassword/`;
+
 const URL_BOOKS = `${BASE_URL}/books`;
 
 const headers = { "Content-Type": "application/json" };
@@ -87,11 +90,9 @@ export class AuthService extends User {
     };
     try {
       const response = await axios.post(URL_REGISTER, body, { headers });
-      // this.setAuthToken(response.data.token);
       this.setBearerHeader(response.data.token);
-      this.setUserEmail(email);
+      this.setUserData(response.data.data);
       this.setIsLoggedIn(true);
-      await this.findUserByEmail();
     } catch (error) {
       console.error(error);
       throw error;
@@ -106,11 +107,9 @@ export class AuthService extends User {
 
     try {
       const response = await axios.post(URL_LOGIN, body, { headers });
-      // this.setAuthToken(response.data.token);
       this.setBearerHeader(response.data.token);
-      this.setUserEmail(email);
+      this.setUserData(response.data.data);
       this.setIsLoggedIn(true);
-      await this.findUserByEmail();
     } catch (error) {
       console.error(error);
       throw error;
@@ -126,6 +125,37 @@ export class AuthService extends User {
       this.setUserData(response.data.data);
     } catch (error) {
       console.error(error);
+    }
+  }
+
+  async forgotPassword(email) {
+    const body = {
+      email,
+    };
+
+    try {
+      await axios.post(URL_FORGOT_PASSWORD, body, { headers });
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  }
+
+  async resetPassword(token, password) {
+    const body = {
+      password,
+    };
+
+    try {
+      const response = await axios.put(URL_RESET_PASSWORD + token, body, {
+        headers,
+      });
+      this.setBearerHeader(response.data.token);
+      this.setUserData(response.data.data);
+      this.setIsLoggedIn(true);
+    } catch (error) {
+      console.error(error);
+      throw error;
     }
   }
 }

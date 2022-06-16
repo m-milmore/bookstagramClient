@@ -4,7 +4,7 @@ import "./Alert.css";
 
 const Alert = ({ message, type, close }) => {
   return (
-    <div onClick={close} className={`alert ${type}`} role="alert">
+    <div onClick={close} className={`my-alert ${type}`} role="alert">
       {message}
     </div>
   );

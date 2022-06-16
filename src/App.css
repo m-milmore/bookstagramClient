@@ -89,7 +89,7 @@ h5 {
 }
 
 .delete-btn {
-  background: rgba(139, 32, 187, .75);
+  background: rgba(139, 32, 187, 0.75);
 }
 
 .submit-btn:hover {
@@ -142,20 +142,6 @@ input[type="text"].disabled {
   text-decoration: underline;
 }
 
-.alert.alert-danger {
-  color: #721c24;
-  background-color: #f8d7da;
-  border-color: #f5c6cb;
-  border-left: 5px solid #cc0000;
-}
-
-.alert.alert-ok {
-  color: white;
-  background-color: var(--sky-blue);
-  border-color: var(--sky-tint);
-  border-left: 5px solid #0d4b5e;
-}
-
 .App-header {
   display: flex;
   flex-direction: column;
@@ -171,7 +157,7 @@ input[type="text"].disabled {
 
 li {
   text-align: left;
-  color:rgb(139, 32, 187)
+  color: rgb(139, 32, 187);
 }
 
 a {

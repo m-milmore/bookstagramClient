@@ -3,6 +3,7 @@ import { AuthService, BookService } from "./services";
 import orderBy from "lodash.orderby";
 import Navbar from "./components/Navbar/Navbar";
 import MainPage from "./components/MainPage/MainPage";
+import Alert from "./components/Alert/Alert";
 
 const authService = new AuthService();
 const bookService = new BookService();
@@ -20,23 +21,33 @@ const App = () => {
   };
 
   useEffect(() => {
+    // need the 2 setLoading(false), both in try & catch, so "no pictures" message not showing unnecessary
     setLoading(true);
     bookService
       .getAllBooks()
-      .then(() =>
-        setBooks(orderBy(bookService.getBooks(), ["createAt"], ["asc"]))
-      )
+      .then(() => {
+        setBooks(orderBy(bookService.getBooks(), ["createAt"], ["asc"]));
+        setLoading(false);
+      })
       .catch(() => {
+        setLoading(false);
         setError(true);
       });
-    setLoading(false);
   }, []);
+
+  const errMsg = "Error loading images.";
 
   return (
     <div className="container" style={{ textAlign: "center" }}>
       <UserContext.Provider value={context}>
         <Navbar />
-        <MainPage loading={loading} error={error} />
+        {loading ? (
+          <div>Loading...</div>
+        ) : error ? (
+          <Alert message={errMsg} type="my-alert-danger" />
+        ) : (
+          <MainPage />
+        )}
       </UserContext.Provider>
     </div>
   );
