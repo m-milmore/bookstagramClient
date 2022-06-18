@@ -10,8 +10,3 @@ export const EYE_ICONS = {
   SHOW: EYE_ICON,
   HIDE: EYE_ICON_HIDE,
 };
-
-export const PASSWORD_RULES = `
-Password must be 8-20 characters, including at least one capital letter, at least one small letter,
-one number and one special character -!@#$%^&*()_+
-`;

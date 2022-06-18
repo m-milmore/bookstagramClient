@@ -1,0 +1,26 @@
+.submit-button {
+  background-color: rgb(204, 44, 83);
+  color: white;
+  border: none;
+  width: 100%;
+  cursor: pointer;
+  padding: 10px 0;
+  margin-top: 10px;
+  border-radius: 5px;
+  text-transform: uppercase;
+}
+
+.submit-button:hover {
+  background-color: rgb(244, 54, 103);
+}
+
+.submit-button:active {
+  font-weight: 700;
+  text-decoration: underline;
+}
+
+.submit-button[disabled] {
+  background-color: gray;
+  pointer-events: none;
+  user-select: none;
+}

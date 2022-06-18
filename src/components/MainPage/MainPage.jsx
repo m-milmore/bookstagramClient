@@ -12,7 +12,7 @@ const MainPage = () => {
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    // need the 2 setLoading(false), both in try & catch, so "no pictures" message not showing unnecessary
+    // need the 2 setLoading(false), both in try & catch, so the "no pictures" message doesn't show unnecessary
     setLoading(true);
     bookService
       .getAllBooks()

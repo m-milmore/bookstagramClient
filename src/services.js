@@ -2,11 +2,11 @@ import axios from "axios";
 
 const BASE_URL = "http://localhost:5000/api/v1";
 const URL_AUTH = `${BASE_URL}/auth`;
-const URL_LOGIN = `${URL_AUTH}/login`;
-const URL_REGISTER = `${URL_AUTH}/register`;
 
 const URL_USER_BY_EMAIL = `${URL_AUTH}/`;
-
+const URL_LOGIN = `${URL_AUTH}/login`;
+const URL_REGISTER = `${URL_AUTH}/register`;
+const URL_LOGOUT = `${URL_AUTH}/logout`;
 const URL_FORGOT_PASSWORD = `${URL_AUTH}/forgotpassword`;
 const URL_RESET_PASSWORD = `${URL_AUTH}/resetpassword/`;
 
@@ -21,8 +21,6 @@ class User {
     this.email = "";
     this.role = "";
     this.createAt = "";
-    this.avatarName = "";
-    this.avatarColor = "";
     this.isLoggedIn = false;
   }
 
@@ -35,15 +33,12 @@ class User {
   }
 
   setUserData(userData) {
-    const { _id, name, email, role, createAt, avatarName, avatarColor } =
-      userData;
+    const { _id, name, email, role, createAt } = userData;
     this.id = _id;
     this.name = name;
     this.email = email;
     this.role = role;
     this.createAt = createAt;
-    this.avatarName = avatarName;
-    this.avatarColor = avatarColor;
   }
 
   logoutUser() {
@@ -52,8 +47,6 @@ class User {
     this.email = "";
     this.role = "";
     this.createAt = "";
-    this.avatarName = "";
-    this.avatarColor = "";
     this.isLoggedIn = false;
   }
 }
@@ -80,13 +73,11 @@ export class AuthService extends User {
     return this.bearerHeader;
   }
 
-  async registerUser(name, email, password, avatarName, avatarColor) {
+  async registerUser(name, email, password) {
     const body = {
       name,
       email: email.toLowerCase(),
       password,
-      avatarName,
-      avatarColor,
     };
     try {
       const response = await axios.post(URL_REGISTER, body, { headers });
@@ -155,6 +146,17 @@ export class AuthService extends User {
       this.setIsLoggedIn(true);
     } catch (error) {
       console.error(error);
+      throw error;
+    }
+  }
+
+  async userLogout() {
+    try {
+      await axios.get(URL_LOGOUT, { headers });
+      this.bearerHeader = {};
+      this.logoutUser();
+    } catch (error) {
+      console.log(error);
       throw error;
     }
   }

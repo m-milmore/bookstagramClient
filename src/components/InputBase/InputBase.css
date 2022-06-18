@@ -3,11 +3,11 @@
 	flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 95%;
+  width: 100%;
 	position: relative;
 }
 
-input {
+.input-base-container input {
   width: 100%;
   font-size: 1.35rem;
   margin: 10px 0 20px;
@@ -19,7 +19,7 @@ input.red-bg {
   background-color: rgba(255, 0, 0, 0.05);
 }
 
-input:focus {
+.input-base-container input:focus {
   outline: none;
 }
 

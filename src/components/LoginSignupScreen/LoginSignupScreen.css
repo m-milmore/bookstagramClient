@@ -11,11 +11,12 @@
 }
 
 .close-button-container span {
-    cursor: pointer;
+  transition: ease-in-out 0.1s;
 }
 
 .close-button-container span:hover {
-  color: rgba(88, 88, 88, 0.25);
+  text-decoration: underline;
+  cursor: pointer;
 }
 
 form {
@@ -99,11 +100,14 @@ form {
 
 .span-cancel {
   text-decoration: underline;
-  color: rgb(88, 88, 88);
-  cursor: pointer;
-  user-select: none;
+  opacity: 0.7;
   font-size: 1rem;
-  /* display: block; */
+  transition: ease-in-out 0.2s;
+}
+
+.span-cancel:hover {
+  cursor: pointer;
+  opacity: 1;
 }
 
 .span-policy {
@@ -112,4 +116,14 @@ form {
   font-size: 1rem;
   /* padding-top: 30px; */
   cursor: pointer;
+}
+
+.forgot-password {
+  transition: ease-in-out 0.2s;
+  opacity: 0.7;
+}
+
+.forgot-password:hover {
+  cursor: pointer;
+  opacity: 1;
 }

@@ -1,8 +1,8 @@
 import React from "react";
 import "./LoginSignupScreen.css";
-import { PASSWORD_RULES, EYE_ICONS } from "../../constants";
+import { EYE_ICONS } from "../../constants";
 import RadioButtons from "./RadioButtons";
-import InputBase from "./InputBase";
+import InputBase from "../InputBase/InputBase";
 import "bootstrap/dist/js/bootstrap.bundle";
 
 const INIT_STATE = {
@@ -38,7 +38,7 @@ class LoginSignupScreen extends React.Component {
     this.state = INIT_STATE;
   }
 
-  // for x, Close, will close the modal
+  // for x, Cancel, will close the modal
   handleCloseButton = () => {
     this.state.isLogged === "" && this.setState(INIT_STATE);
   };
@@ -260,6 +260,10 @@ class LoginSignupScreen extends React.Component {
     this.setState(INIT_STATE);
   };
 
+  handleForgotPassword = () => {
+    console.log("Handle Forgot Password")
+  }
+
   render(props) {
     const {
       accessType,
@@ -298,7 +302,8 @@ class LoginSignupScreen extends React.Component {
               type="button"
               data-bs-toggle="dropdown"
             >
-              <i className="bi bi-person-fill"></i>&nbsp;Hello, {isLogged.split(" ")[0]}
+              <i className="bi bi-person-fill"></i>&nbsp;Hello,{" "}
+              {isLogged.split(" ")[0]}
             </button>
             <ul
               className="dropdown-menu"
@@ -336,7 +341,7 @@ class LoginSignupScreen extends React.Component {
           onClick={this.handleModal}
         >
           <div className="modal-dialog" id="dialog">
-            <div className="modal-content" id="content">
+            <div className="modal-content py-3" id="content">
               <div className="modal-body" id="body">
                 <div className="close-button-container">
                   <span
@@ -344,6 +349,7 @@ class LoginSignupScreen extends React.Component {
                     data-bs-dismiss="modal"
                     aria-label="Close"
                     onClick={this.handleCloseButton}
+                    className="x-class"
                   >
                     &#x2716;
                   </span>
@@ -397,7 +403,7 @@ class LoginSignupScreen extends React.Component {
                   />
                   <span className="password-message">
                     {accessType === "signUp" || passwordMessage
-                      ? PASSWORD_RULES
+                      ? "PASSWORD_RULES"
                       : ""}
                   </span>
                   {accessType === "signUp" && (
@@ -461,6 +467,7 @@ class LoginSignupScreen extends React.Component {
                   )}
                   <button className="submit-button">{submitButton}</button>
                 </form>
+                <div style={{paddingTop: "5px"}}>
                   <span
                     className="span-cancel"
                     data-bs-dismiss="modal"
@@ -470,14 +477,18 @@ class LoginSignupScreen extends React.Component {
                     Cancel
                   </span>
                 </div>
-                <span className="span-policy">
-                  <u>Privacy Policy and Cookies</u>
-                  &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-                  <u>Terms of Sale and Use</u>
-                </span>
+                <div>
+                  <span className="forgot-password" onClick={this.handleForgotPassword}>Forgot password?</span>
+                </div>
               </div>
+              <span className="span-policy">
+                <u>Privacy Policy and Cookies</u>
+                &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+                <u>Terms of Sale and Use</u>
+              </span>
             </div>
           </div>
+        </div>
       </>
     );
   }

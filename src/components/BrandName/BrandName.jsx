@@ -7,7 +7,7 @@ library.add(faBook);
 
 const BrandName = () => {
   return (
-    <>
+    <div style={{display: "flex"}}>
       <span className="fw-bold text-info h3">
         <FontAwesomeIcon icon="book" />
       </span>
@@ -17,7 +17,7 @@ const BrandName = () => {
       >
         bookstagram
       </span>
-    </>
+    </div>
   );
 };
 
