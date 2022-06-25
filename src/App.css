@@ -134,15 +134,19 @@ input[type="text"].disabled {
   display: flex;
   flex-direction: column;
   padding: 20px;
+  align-items: center;
 }
 
-.footer-text a {
+.footer-text a,
+.footer-text span {
   text-decoration: none;
   color: #0d6efd;
 }
 
-.footer-text a:hover {
+.footer-text a:hover,
+.footer-text span:hover {
   text-decoration: underline;
+  cursor: pointer;
 }
 
 .App-header {

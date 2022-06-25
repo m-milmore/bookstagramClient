@@ -6,7 +6,7 @@ import Alert from "../Alert/Alert";
 import Books from "../Books/Books";
 
 const MainPage = () => {
-  const {bookService} = useContext(UserContext)
+  const { bookService } = useContext(UserContext);
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
@@ -30,13 +30,13 @@ const MainPage = () => {
 
   return (
     <>
-      <Navbar books={books}/>
+      <Navbar books={books} />
       {loading ? (
         <div>Loading...</div>
       ) : error ? (
         <Alert message={errMsg} type="my-alert-danger" />
       ) : (
-        <Books books={books}/>
+        <Books books={books} />
       )}
     </>
   );

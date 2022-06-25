@@ -10,3 +10,5 @@ export const EYE_ICONS = {
   SHOW: EYE_ICON,
   HIDE: EYE_ICON_HIDE,
 };
+
+export const CLIENT_URL = "http://localhost:3000";

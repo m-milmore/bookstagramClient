@@ -1,8 +1,8 @@
 import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
-import { UserContext } from "../../App";
+import { UserContext } from "../../../App";
 import { useLocation, useNavigate } from "react-router-dom";
-import Alert from "../Alert/Alert";
+import Alert from "../../Alert/Alert";
 
 const UserLogin = () => {
   const { authService } = useContext(UserContext);

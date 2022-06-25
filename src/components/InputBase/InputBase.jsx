@@ -4,7 +4,7 @@ import LabelErrorContainer from "./LabelErrorContainer";
 
 class InputBase extends React.Component {
   render() {
-    const { label, error, typeIs, handleEyeIcon, eyeIcon, ...props } =
+    const { label, error, typeIs, handleEyeIcon, eyeIcon, placeholder, ...props } =
       this.props;
 
     return (
@@ -14,6 +14,7 @@ class InputBase extends React.Component {
           autoComplete="off"
           className={`${error ? "red-bg" : ""}`}
           {...props}
+          placeholder={placeholder}
         />
         {typeIs === "password" && (
           <div className="eye-icon-container" onClick={handleEyeIcon}>

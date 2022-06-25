@@ -7,10 +7,10 @@ import {
   Navigate,
   Outlet,
 } from "react-router-dom";
-import MainPage from "./components/MainPage/MainPage";
+import MainPage from "../MainPage/MainPage";
 import UserLogin from "./components/UserLogin/UserLogin";
 import UserCreate from "./components/UserCreate/UserCreate";
-import { AuthService } from "./services";
+import { AuthService } from "../../services";
 
 const authService = new AuthService();
 export const UserContext = createContext();

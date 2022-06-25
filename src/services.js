@@ -4,9 +4,12 @@ const BASE_URL = "http://localhost:5000/api/v1";
 const URL_AUTH = `${BASE_URL}/auth`;
 
 const URL_USER_BY_EMAIL = `${URL_AUTH}/`;
+
 const URL_LOGIN = `${URL_AUTH}/login`;
 const URL_REGISTER = `${URL_AUTH}/register`;
 const URL_LOGOUT = `${URL_AUTH}/logout`;
+const URL_UPDATE_DETAILS = `${URL_AUTH}/updatedetails`;
+const URL_UPDATE_PASSWORD = `${URL_AUTH}/updatepassword`;
 const URL_FORGOT_PASSWORD = `${URL_AUTH}/forgotpassword`;
 const URL_RESET_PASSWORD = `${URL_AUTH}/resetpassword/`;
 
@@ -119,10 +122,13 @@ export class AuthService extends User {
     }
   }
 
-  async forgotPassword(email) {
+  async forgotPassword(email, urlLink) {
     const body = {
       email,
+      urlLink,
     };
+
+    this.setUserEmail(email);
 
     try {
       await axios.post(URL_FORGOT_PASSWORD, body, { headers });
@@ -132,7 +138,7 @@ export class AuthService extends User {
     }
   }
 
-  async resetPassword(token, password) {
+  async resetPassword(password, token) {
     const body = {
       password,
     };
@@ -157,6 +163,31 @@ export class AuthService extends User {
       this.logoutUser();
     } catch (error) {
       console.log(error);
+      throw error;
+    }
+  }
+
+  async updateDetails(name, email) {
+    const body = { name, email };
+    const headers = this.getBearerHeader();
+    try {
+      const response = await axios.put(URL_UPDATE_DETAILS, body, { headers });
+      this.setUserData(response.data.data);
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  }
+
+  async updatePassword(currentPassword, newPassword) {
+    const body = { currentPassword, newPassword };
+    const headers = this.getBearerHeader();
+    const response = await axios.post(URL_UPDATE_PASSWORD, body, { headers });
+    this.setBearerHeader(response.data.token);
+    this.setUserData(response.data.data);
+    try {
+    } catch (error) {
+      console.error(error);
       throw error;
     }
   }

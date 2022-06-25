@@ -1,10 +1,10 @@
 import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import "./UserCreate.css";
-import Modal from "../Modal/Modal";
-import { UserContext } from "../../App";
+import Modal from "../../Modal/Modal";
+import { UserContext } from "../../../App";
 import { useLocation, useNavigate } from "react-router-dom";
-import Alert from "../Alert/Alert";
+import Alert from "../../Alert/Alert";
 
 const UserCreate = () => {
   const { authService } = useContext(UserContext);

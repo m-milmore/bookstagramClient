@@ -3,15 +3,16 @@
   color: white;
   border: none;
   width: 100%;
-  cursor: pointer;
   padding: 10px 0;
   margin-top: 10px;
   border-radius: 5px;
   text-transform: uppercase;
+  font-weight: 600;
 }
 
 .submit-button:hover {
   background-color: rgb(244, 54, 103);
+  cursor: pointer;
 }
 
 .submit-button:active {

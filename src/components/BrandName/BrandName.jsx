@@ -1,22 +1,12 @@
 import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { library } from "@fortawesome/fontawesome-svg-core";
-import { faBook } from "@fortawesome/free-solid-svg-icons";
-
-library.add(faBook);
 
 const BrandName = () => {
   return (
-    <div style={{display: "flex"}}>
-      <span className="fw-bold text-info h3">
-        <FontAwesomeIcon icon="book" />
-      </span>
-      <span
-        className="text-info ms-2 h4"
-        style={{ position: "relative", top: "0" }}
-      >
-        bookstagram
-      </span>
+    <div style={{ display: "flex", height: "100%" }}>
+      <div className="fw-bold text-info h3">
+        <i className="fa-solid fa-book" style={{ verticalAlign: "middle" }}></i>
+      </div>
+      <div className="text-info ms-2 h2 fw-bolder">bookstagram</div>
     </div>
   );
 };
