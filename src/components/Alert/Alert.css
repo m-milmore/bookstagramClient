@@ -1,9 +1,10 @@
 .my-alert {
   position: relative;
   padding: 0.75rem 1.25rem;
-  margin-bottom: 1rem;
+  margin: 0 auto 1rem;
   border: 1px solid transparent;
   border-radius: 0.24rem;
+  max-width: 360px
 }
 
 .my-alert.my-alert-danger {

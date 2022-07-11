@@ -9,24 +9,29 @@ const MainPage = () => {
   const { bookService } = useContext(UserContext);
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
+  const [error, setError] = useState("");
 
   useEffect(() => {
+    let isMounted = true;  // prevents "trying to modify state on a unmounted component" error
+    const controller = new AbortController();
     // need the 2 setLoading(false), both in try & catch, so the "no pictures" message doesn't show unnecessary
     setLoading(true);
     bookService
-      .getAllBooks()
+      .getAllBooks(isMounted, controller)
       .then(() => {
         setBooks(orderBy(bookService.getBooks(), ["createAt"], ["asc"]));
         setLoading(false);
       })
       .catch(() => {
         setLoading(false);
-        setError(true);
+        setError("Error loading images.");
       });
-  }, [bookService]);
 
-  const errMsg = "Error loading images.";
+    return () => {
+      isMounted = false;
+      controller.abort();
+    };
+  }, [bookService]);
 
   return (
     <>
@@ -34,7 +39,7 @@ const MainPage = () => {
       {loading ? (
         <div>Loading...</div>
       ) : error ? (
-        <Alert message={errMsg} type="my-alert-danger" />
+        <Alert message={error} type="my-alert-danger" />
       ) : (
         <Books books={books} />
       )}

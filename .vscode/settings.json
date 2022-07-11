@@ -9,9 +9,11 @@
 		"fortawesome",
 		"mmci",
 		"noreferrer",
+		"progressbar",
 		"Signin",
 		"updatedetails",
 		"updatepassword",
-		"uuidv"
+		"uuidv",
+		"valuenow"
 	]
 }

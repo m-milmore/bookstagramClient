@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { UserContext } from "../../App";
 import Modal from "react-bootstrap/Modal";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -15,6 +15,10 @@ const UpdateDetails = ({ show, handleHide, toggleToast }) => {
 
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    !show && setError("")
+  }, [show])
 
   const handleChange = ({ target: { name, value } }) => {
     setUserLogins({ ...userLogins, [name]: value });

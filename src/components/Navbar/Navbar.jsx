@@ -1,4 +1,5 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
+import PropTypes from "prop-types";
 import { UserContext } from "../../App";
 import BrandName from "../BrandName/BrandName";
 import UploadLink from "../UploadLink/UploadLink";
@@ -9,12 +10,24 @@ import "bootstrap/dist/js/bootstrap.bundle"; // for bootstrap dropdown
 import ConfirmationToast from "../ConfirmationToast/ConfirmationToast";
 
 const Navbar = ({ books }) => {
-  const {
-    authService: { isLoggedIn, name },
-  } = useContext(UserContext);
+  const { authService, isLoggedIn, appSetIsLoggedIn, persist } =
+    useContext(UserContext);
 
   const [showToast, setShowToast] = useState(false);
   const toggleToast = () => setShowToast(!showToast);
+
+  useEffect(() => {
+    if (!isLoggedIn && persist) {
+      authService
+        .refresh()
+        .then(() => {
+          appSetIsLoggedIn(true);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    }
+  }, [authService, persist, isLoggedIn, appSetIsLoggedIn]);
 
   return (
     <>
@@ -27,7 +40,9 @@ const Navbar = ({ books }) => {
             <div className="m-0 p-0">
               <BrandName />
             </div>
-            <div className="m-0 p-0">{isLoggedIn && <UploadLink />}</div>
+            <div className="m-0 p-0">
+              {isLoggedIn && <UploadLink toggleToast={toggleToast} />}
+            </div>
           </div>
           <div className="col-6 m-0 py-2 d-flex justify-content-evenly">
             <div className="m-0 p-0">
@@ -35,7 +50,10 @@ const Navbar = ({ books }) => {
             </div>
             <div className="m-0 p-0">
               {isLoggedIn ? (
-                <LoggedInButton name={name} toggleToast={toggleToast} />
+                <LoggedInButton
+                  name={authService.name}
+                  toggleToast={toggleToast}
+                />
               ) : (
                 <LoginSignupButton toggleToast={toggleToast} />
               )}
@@ -46,6 +64,14 @@ const Navbar = ({ books }) => {
       <ConfirmationToast show={showToast} onClose={toggleToast} />
     </>
   );
+};
+
+Navbar.propTypes = {
+  books: PropTypes.arrayOf(PropTypes.object),
+};
+
+Navbar.defaultProps = {
+  books: [],
 };
 
 export default Navbar;

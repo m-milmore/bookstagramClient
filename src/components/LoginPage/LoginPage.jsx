@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import Modal from "react-bootstrap/Modal";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { UserContext } from "../../App";
@@ -8,11 +8,12 @@ import Alert from "../Alert/Alert";
 import "./LoginPage.css"; // for submit button
 
 const LoginPage = ({ show, handleHide, handleShow }) => {
-  const { authService, appSetIsLoggedIn } = useContext(UserContext);
+  const { authService, appSetIsLoggedIn, setPersist, persist } =
+    useContext(UserContext);
 
   const [userLogins, setUserLogins] = useState({
     email: "l@l.com",
-    password: "111111",
+    password: "123456",
   });
 
   const [passwordInfo, setPasswordInfo] = useState({
@@ -22,6 +23,10 @@ const LoginPage = ({ show, handleHide, handleShow }) => {
 
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    localStorage.setItem("persist", persist);
+  }, [persist]);
 
   const handleChange = ({ target: { name, value } }) => {
     setUserLogins({ ...userLogins, [name]: value });
@@ -37,6 +42,10 @@ const LoginPage = ({ show, handleHide, handleShow }) => {
           passwordType: "text",
           eyeIcon: EYE_ICONS["HIDE"],
         });
+  };
+
+  const togglePersist = () => {
+    setPersist(!persist);
   };
 
   const handleSubmit = (e) => {
@@ -100,6 +109,16 @@ const LoginPage = ({ show, handleHide, handleShow }) => {
               className="submit-button"
               value="sign in"
             />
+            <div className="persistCheck">
+              <input
+                type="checkbox"
+                name="persist"
+                onChange={togglePersist}
+                checked={persist}
+                id="persist"
+              />
+              <label htmlFor="persist">Trust This Device</label>
+            </div>
           </form>
           <div className="footer-text">
             <span onClick={() => handleShow("forgotModal")}>

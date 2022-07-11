@@ -4,12 +4,20 @@ import LabelErrorContainer from "./LabelErrorContainer";
 
 class InputBase extends React.Component {
   render() {
-    const { label, error, typeIs, handleEyeIcon, eyeIcon, placeholder, ...props } =
-      this.props;
+    const {
+      label,
+      error,
+      typeIs,
+      handleEyeIcon,
+      eyeIcon,
+      placeholder,
+      htmlFor,
+      ...props
+    } = this.props;
 
     return (
       <div className="input-base-container">
-        <LabelErrorContainer label={label} error={error} />
+        <LabelErrorContainer label={label} error={error} htmlFor={htmlFor} />
         <input
           autoComplete="off"
           className={`${error ? "red-bg" : ""}`}

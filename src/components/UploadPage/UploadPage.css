@@ -1,0 +1,38 @@
+.drop-region-container {
+  margin-top: 3em;
+  padding: 1em;
+  border-radius: 10px;
+  width: 80%;
+  text-align: center;
+  background-color: gray;
+}
+
+.drop-region-container.highlight {
+  background-color: limegreen;
+}
+
+.drop-region {
+  pointer-events: none;
+  border: dashed 2px white;
+  color: white;
+  border-radius: 10px;
+  padding: 3em;
+}
+
+#download-btn {
+  filter: invert(1);
+  margin-bottom: 30px;
+}
+
+#file-input {
+  display: none;
+}
+
+.progress {
+  margin-bottom: 2em;
+  width: 78%;
+}
+
+.progress-bar {
+  width: 0%;
+}

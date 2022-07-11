@@ -3,6 +3,7 @@ import {
   IDENTITY_POOL_ID,
   ALBUM_BUCKET_NAME,
   BUCKET_REGION,
+  BUCKET_FOLDER,
 } from "./constants";
 
 AWS.config.update({
@@ -17,6 +18,7 @@ const s3 = new AWS.S3({
   params: { Bucket: ALBUM_BUCKET_NAME },
 });
 
+const albumName = BUCKET_FOLDER;
 export class AWSService {
   async viewAlbum(albumName) {
     return new Promise(async (success, failure) => {
@@ -41,5 +43,44 @@ export class AWSService {
         failure(error);
       }
     });
+  }
+
+  async addPhoto(files) {
+    if (!files.length) {
+      return alert("Please choose a file to upload first.");
+    }
+    const file = files[0];
+    const fileName = file.name;
+    const albumPhotosKey = encodeURIComponent(albumName) + "/";
+
+    const photoKey = albumPhotosKey + fileName;
+
+    const upload = new AWS.S3.ManagedUpload({
+      params: {
+        Bucket: ALBUM_BUCKET_NAME,
+        Key: photoKey,
+        Body: file,
+      },
+    });
+
+    const promise = upload.promise();
+
+    try {
+      await promise.then(
+        (data) => {
+          alert("Successfully uploaded photo.");
+          console.log("data location in addPhoto in awsService", data.Location);
+          return data.Location;
+        },
+        (err) => {
+          return alert(
+            "There was an error uploading your photo: ",
+            err.message
+          );
+        }
+      );
+    } catch (error) {
+      throw error;
+    }
   }
 }
