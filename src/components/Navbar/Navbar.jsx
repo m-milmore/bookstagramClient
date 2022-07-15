@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import PropTypes from "prop-types";
 import { UserContext } from "../../App";
 import BrandName from "../BrandName/BrandName";
@@ -7,14 +7,10 @@ import SearchButton from "../SearchButton/SearchButton";
 import LoginSignupButton from "../LoginSignupButton/LoginSignupButton";
 import LoggedInButton from "../LoggedInButton/LoggedInButton";
 import "bootstrap/dist/js/bootstrap.bundle"; // for bootstrap dropdown
-import ConfirmationToast from "../ConfirmationToast/ConfirmationToast";
 
 const Navbar = ({ books }) => {
   const { authService, isLoggedIn, appSetIsLoggedIn, persist } =
     useContext(UserContext);
-
-  const [showToast, setShowToast] = useState(false);
-  const toggleToast = () => setShowToast(!showToast);
 
   useEffect(() => {
     if (!isLoggedIn && persist) {
@@ -40,9 +36,7 @@ const Navbar = ({ books }) => {
             <div className="m-0 p-0">
               <BrandName />
             </div>
-            <div className="m-0 p-0">
-              {isLoggedIn && <UploadLink toggleToast={toggleToast} />}
-            </div>
+            <div className="m-0 p-0">{isLoggedIn && <UploadLink />}</div>
           </div>
           <div className="col-6 m-0 py-2 d-flex justify-content-evenly">
             <div className="m-0 p-0">
@@ -50,18 +44,14 @@ const Navbar = ({ books }) => {
             </div>
             <div className="m-0 p-0">
               {isLoggedIn ? (
-                <LoggedInButton
-                  name={authService.name}
-                  toggleToast={toggleToast}
-                />
+                <LoggedInButton name={authService.name} />
               ) : (
-                <LoginSignupButton toggleToast={toggleToast} />
+                <LoginSignupButton />
               )}
             </div>
           </div>
         </div>
       </div>
-      <ConfirmationToast show={showToast} onClose={toggleToast} />
     </>
   );
 };

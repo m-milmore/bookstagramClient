@@ -4,9 +4,10 @@ import Modal from "react-bootstrap/Modal";
 import "bootstrap/dist/css/bootstrap.min.css";
 import InputBase from "../InputBase/InputBase";
 import Alert from "../Alert/Alert";
+import { appEmitter } from "../MainPage/MainPage";
 
-const UpdateDetails = ({ show, handleHide, toggleToast }) => {
-  const { authService } = useContext(UserContext);
+const UpdateDetails = ({ show, handleHide }) => {
+  const { authService, appSetIsLoggedIn } = useContext(UserContext);
 
   const [userLogins, setUserLogins] = useState({
     name: authService.name,
@@ -17,8 +18,10 @@ const UpdateDetails = ({ show, handleHide, toggleToast }) => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    !show && setError("")
-  }, [show])
+    !show && setError("");
+    !show &&
+      setUserLogins({ name: authService.name, email: authService.email });
+  }, [show, authService.name, authService.email]);
 
   const handleChange = ({ target: { name, value } }) => {
     setUserLogins({ ...userLogins, [name]: value });
@@ -33,9 +36,15 @@ const UpdateDetails = ({ show, handleHide, toggleToast }) => {
         .updateDetails(name, email)
         .then(() => {
           handleHide();
-          toggleToast();
+          appEmitter.emit("toast", "Account updated successfully.");
         })
-        .catch(() => {
+        .catch((error) => {
+          console.log(error.response.data.error);
+          appEmitter.emit(
+            "toast",
+            "Unauthorized or expired token. Please sign in again."
+          );
+          appSetIsLoggedIn(false);
           setError("Error updating account. Please try again.");
         });
       setLoading(false);

@@ -1,14 +1,19 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { UserContext } from "../../App";
 import Modal from "react-bootstrap/Modal";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Alert from "../Alert/Alert";
+import { appEmitter } from "../MainPage/MainPage";
 
-const LogoutPage = ({ show, handleHide, toggleToast}) => {
+const LogoutPage = ({ show, handleHide }) => {
   const { authService, appSetIsLoggedIn } = useContext(UserContext);
 
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+      !show && setError("");
+    }, [show]);
 
   const logoutUser = () => {
     setError("");
@@ -17,8 +22,8 @@ const LogoutPage = ({ show, handleHide, toggleToast}) => {
       .userLogout()
       .then(() => {
         handleHide();
+        appEmitter.emit("toast", "You are now signed out.");
         appSetIsLoggedIn(false);
-        toggleToast();
       })
       .catch(() => {
         setError("Error logging out of the account. Please try again.");

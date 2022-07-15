@@ -1,17 +1,23 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import Modal from "react-bootstrap/Modal";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { UserContext } from "../../App";
 import InputBase from "../InputBase/InputBase";
 import Alert from "../Alert/Alert";
 import { CLIENT_URL } from "../../constants";
+import { appEmitter } from "../MainPage/MainPage";
 
-const ForgotPassword = ({ show, handleHide, handleShow, toggleToast }) => {
+const ForgotPassword = ({ show, handleHide, handleShow }) => {
   const { authService } = useContext(UserContext);
 
   const [email, setEmail] = useState("m.milmore2701@gmail.com");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    !show && setError("");
+    !show && setEmail("");
+  }, [show]);
 
   const handleChange = ({ target: { value } }) => {
     setEmail(value);
@@ -25,10 +31,10 @@ const ForgotPassword = ({ show, handleHide, handleShow, toggleToast }) => {
       .forgotPassword(email, urlLink)
       .then(() => {
         handleHide();
-        toggleToast();
+        appEmitter.emit("toast", `Email send to ${email}`);
       })
       .catch(() => {
-        setError("Sorry email entered not in the database.");
+        setError("Sorry the email you entered is not in the database.");
       });
     setLoading(false);
   };

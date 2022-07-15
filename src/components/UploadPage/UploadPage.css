@@ -1,5 +1,5 @@
 .drop-region-container {
-  margin-top: 3em;
+  margin-top: 0.5rem;
   padding: 1em;
   border-radius: 10px;
   width: 80%;
@@ -16,12 +16,20 @@
   border: dashed 2px white;
   color: white;
   border-radius: 10px;
-  padding: 3em;
+  padding: 3rem 0;
+  height: 25rem;
 }
 
 #download-btn {
   filter: invert(1);
   margin-bottom: 30px;
+}
+
+.drop-region h2 {
+  inline-size: 250px;
+  overflow-wrap: break-word;
+  hyphens: manual;
+  margin: 0 auto;
 }
 
 #file-input {
@@ -30,9 +38,23 @@
 
 .progress {
   margin-bottom: 2em;
-  width: 78%;
+  width: 80%;
 }
 
 .progress-bar {
   width: 0%;
+}
+
+.progress-bar-percentage-container {
+  position: relative;
+}
+
+.percentage {
+  position: absolute;
+  top: -4px;
+  left: 45%;
+}
+
+.percentage.zero {
+  display: none;
 }

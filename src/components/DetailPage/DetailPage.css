@@ -5,11 +5,32 @@
   border-radius: 4px;
 }
 
-.card-body .para-left {
+.card-body.detail-page {
   white-space: break-spaces;
-  text-align: left;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 4px;
+  height: 100%;
 }
 
 .fade.modal-backdrop.show {
-  opacity: 0.25;
+  opacity: 0.15;
+}
+
+.btn-primary.not-owner {
+  display: none;
+}
+
+.card-title-highlight {
+  padding: 5px;
+}
+
+.card-title-highlight:hover {
+  cursor: pointer;
+  border-radius: 5px;
+  background: rgb(247, 247, 247);
+  width: 100%;
 }

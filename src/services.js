@@ -15,6 +15,7 @@ const URL_RESET_PASSWORD = `${URL_AUTH}/resetpassword/`;
 const URL_REFRESH_TOKEN = `${URL_AUTH}/refresh`;
 
 const URL_BOOKS = `${BASE_URL}/books`;
+const URL_BOOKS_VERIFY = `${URL_BOOKS}/verify`;
 
 const headers = { "Content-Type": "application/json" };
 
@@ -121,14 +122,19 @@ export class AuthService extends User {
   }
 
   async findUserByEmail() {
+    const axiosPrivate = this.AxiosPrivate();
     const headers = this.getBearerHeader();
     try {
-      const response = await axios.get(URL_USER_BY_EMAIL + this.email, {
+      const response = await axiosPrivate.get(URL_USER_BY_EMAIL + this.email, {
         headers,
       });
       this.setUserData(response.data.data);
+      axiosPrivate.interceptors.request.eject(axiosPrivate.requestIntercept);
+      axiosPrivate.interceptors.response.eject(axiosPrivate.responseIntercept);
+      return response;
     } catch (error) {
       console.error(error);
+      throw error;
     }
   }
 
@@ -223,10 +229,11 @@ export class AuthService extends User {
       const response = await axios.get(URL_REFRESH_TOKEN, {
         withCredentials: true,
       });
-      this.setBearerHeader("response.data.token");
+      this.setBearerHeader(response.data.token);
       this.setUserData(response.data.data);
       this.setIsLoggedIn(true);
     } catch (error) {
+      console.error(error);
       throw error;
     }
   }
@@ -277,13 +284,12 @@ export class BookService extends AuthService {
     this.books = books;
   }
 
-  async getAllBooks(isMounted, controller) {
+  async getAllBooks() {
     try {
       const response = await axios.get(URL_BOOKS, {
         headers,
-        signal: controller.signal,
       });
-      isMounted && this.setBooks(response.data.data);
+      this.setBooks(response.data.data);
     } catch (error) {
       console.error(error);
       throw error;
@@ -294,15 +300,57 @@ export class BookService extends AuthService {
     const axiosPrivate = this.AxiosPrivate();
     const body = { title, photo };
     const headers = headerWithToken;
-    console.log("in uploadBook, headers:", headers);
-    console.log(title, photo);
     try {
-      const response = await axiosPrivate.post(URL_BOOKS, body, {
+      await axiosPrivate.post(URL_BOOKS, body, {
         headers,
       });
       axiosPrivate.interceptors.request.eject(axiosPrivate.requestIntercept);
       axiosPrivate.interceptors.response.eject(axiosPrivate.responseIntercept);
-      console.log("in uploadBook, in bookService", response);
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  }
+
+  async checkMimeType(files) {
+    const formData = new FormData();
+    formData.append("image", files[0]);
+    const headers = {
+      "Content-Type": "multipart/form-data",
+    };
+    try {
+      await axios.post(URL_BOOKS_VERIFY, formData, {
+        headers,
+      });
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  }
+
+  async updateBook(bookId, title) {
+    const body = { title };
+    const headers = headerWithToken;
+
+    try {
+      await axios.put(URL_BOOKS + `/${bookId}`, body, {
+        headers,
+        withCredentials: true,
+      });
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  }
+
+  async deleteBook(bookId) {
+    const headers = headerWithToken;
+
+    try {
+      await axios.delete(URL_BOOKS + `/${bookId}`, {
+        headers,
+        withCredentials: true,
+      });
     } catch (error) {
       console.error(error);
       throw error;

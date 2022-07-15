@@ -1,9 +1,13 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useCallback } from "react";
 import { UserContext } from "../../App";
 import orderBy from "lodash.orderby";
 import Navbar from "../Navbar/Navbar";
 import Alert from "../Alert/Alert";
 import Books from "../Books/Books";
+import { EventEmitter } from "fbemitter";
+import ConfirmationToast from "../ConfirmationToast/ConfirmationToast";
+
+export const appEmitter = new EventEmitter();
 
 const MainPage = () => {
   const { bookService } = useContext(UserContext);
@@ -11,13 +15,17 @@ const MainPage = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
+  const [showToast, setShowToast] = useState(false);
+  const toggleToast = useCallback(() => {
+    setShowToast(!showToast);
+  }, [showToast]);
+  const [toastMsg, setToastMsg] = useState("");
+
   useEffect(() => {
-    let isMounted = true;  // prevents "trying to modify state on a unmounted component" error
-    const controller = new AbortController();
     // need the 2 setLoading(false), both in try & catch, so the "no pictures" message doesn't show unnecessary
     setLoading(true);
     bookService
-      .getAllBooks(isMounted, controller)
+      .getAllBooks()
       .then(() => {
         setBooks(orderBy(bookService.getBooks(), ["createAt"], ["asc"]));
         setLoading(false);
@@ -26,12 +34,30 @@ const MainPage = () => {
         setLoading(false);
         setError("Error loading images.");
       });
+  }, [bookService]);
+
+  useEffect(() => {
+    const onUpdateBooks = (eventData) => {
+      setBooks(orderBy(bookService.getBooks(), ["createAt"], ["asc"]));
+    };
+
+    const onToastMsg = (msg) => {
+      setToastMsg(msg);
+      toggleToast();
+    };
+
+    const toastListener = appEmitter.addListener("toast", onToastMsg);
+
+    const updateBooksListener = appEmitter.addListener(
+      "newBookUpdate",
+      onUpdateBooks
+    );
 
     return () => {
-      isMounted = false;
-      controller.abort();
+      updateBooksListener.remove();
+      toastListener.remove();
     };
-  }, [bookService]);
+  }, [bookService, toggleToast]);
 
   return (
     <>
@@ -43,6 +69,11 @@ const MainPage = () => {
       ) : (
         <Books books={books} />
       )}
+      <ConfirmationToast
+        show={showToast}
+        onClose={toggleToast}
+        toastMsg={toastMsg}
+      />
     </>
   );
 };

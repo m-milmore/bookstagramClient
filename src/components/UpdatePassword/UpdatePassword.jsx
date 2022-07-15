@@ -5,24 +5,28 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { EYE_ICONS } from "../../constants";
 import InputBase from "../InputBase/InputBase";
 import Alert from "../Alert/Alert";
+import { appEmitter } from "../MainPage/MainPage";
 
-const UpdatePassword = ({ show, handleHide, toggleToast }) => {
-  const { authService } = useContext(UserContext);
+const INIT_STATE = {
+  currentPassword: "",
+  currentPasswordType: "password",
+  currentEyeIcon: EYE_ICONS["SHOW"],
+  newPassword: "",
+  newPasswordType: "password",
+  newEyeIcon: EYE_ICONS["SHOW"],
+};
 
-  const [passwords, setPasswords] = useState({
-    currentPassword: "",
-    currentPasswordType: "password",
-    currentEyeIcon: EYE_ICONS["SHOW"],
-    newPassword: "",
-    newPasswordType: "password",
-    newEyeIcon: EYE_ICONS["SHOW"],
-  });
+const UpdatePassword = ({ show, handleHide }) => {
+  const { authService, appSetIsLoggedIn } = useContext(UserContext);
+
+  const [passwords, setPasswords] = useState(INIT_STATE);
 
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     !show && setError(false);
+    !show && setPasswords(INIT_STATE);
   }, [show]);
 
   const handleChange = ({ target: { name, value } }) => {
@@ -63,10 +67,16 @@ const UpdatePassword = ({ show, handleHide, toggleToast }) => {
         .updatePassword(currentPassword, newPassword)
         .then(() => {
           handleHide();
-          toggleToast();
+          appEmitter.emit("toast", "Password updated successfully.");
         })
-        .catch(() => {
-          setError("Error updating password. Please try again.");
+        .catch((error) => {
+          console.log(error.response.data.error);
+          appEmitter.emit(
+            "toast",
+            "Unauthorized or expired token. Please sign in again."
+          );
+          appSetIsLoggedIn(false);
+          setError("Error updating account. Please try again.");
         });
       setLoading(false);
     } else {

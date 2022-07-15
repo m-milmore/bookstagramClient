@@ -5,6 +5,9 @@ import {
   BUCKET_REGION,
   BUCKET_FOLDER,
 } from "./constants";
+import { EventEmitter } from "fbemitter";
+
+export const progressEmitter = new EventEmitter();
 
 AWS.config.update({
   region: BUCKET_REGION,
@@ -61,25 +64,51 @@ export class AWSService {
         Key: photoKey,
         Body: file,
       },
+    }).on("httpUploadProgress", (progress) => {
+      progressEmitter.emit("progress", progress);
     });
 
     const promise = upload.promise();
 
     try {
-      await promise.then(
+      const data = await promise.then(
         (data) => {
-          alert("Successfully uploaded photo.");
-          console.log("data location in addPhoto in awsService", data.Location);
           return data.Location;
         },
         (err) => {
-          return alert(
+          alert(
             "There was an error uploading your photo: ",
             err.message
           );
+          return err
         }
       );
+      return data;
     } catch (error) {
+      throw error;
+    }
+  }
+
+  async deleteBook(url) {
+    if (!url) {
+      return alert("No url. Can't delete book.");
+    }
+
+    const filename = url.substring(url.lastIndexOf("/") + 1);
+
+    const params = {
+      Bucket: ALBUM_BUCKET_NAME,
+      Key: albumName + "/" + filename,
+    };
+
+    try {
+      await s3.deleteObject(params, (err, data) => {
+        if (err) console.error(err, err.stack)
+        else console.log("Response : ", data)
+      });
+      console.log("Book deleted on s3 successfully!");
+    } catch (error) {
+      console.error("delete s3 error : ", error);
       throw error;
     }
   }

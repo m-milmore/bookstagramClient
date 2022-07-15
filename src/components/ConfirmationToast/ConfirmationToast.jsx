@@ -1,19 +1,23 @@
-import React, { useContext } from "react";
-import { UserContext } from "../../App";
+import React from "react";
 import Toast from "react-bootstrap/Toast";
 import { ToastContainer } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
+// import { appEmitter } from "../MainPage/MainPage";
 
-const ConfirmationToast = ({ show, onClose }) => {
-  const {
-    authService: { isLoggedIn, email },
-  } = useContext(UserContext);
+const ConfirmationToast = ({ show, onClose, toastMsg }) => {
+  // const [toastMsg, setToastMsg] = useState("");
 
-  const toastMsg = isLoggedIn
-    ? "Account updated."
-    : email
-    ? `Email send to ${email}`
-    : "You are now signed out.";
+  // useEffect(() => {
+  //   const onToastMsg = (msg) => {
+  //     setToastMsg(msg);
+  //   };
+
+  //   const listener = appEmitter.addListener("toast", onToastMsg);
+
+  //   return () => {
+  //     listener.remove();
+  //   };
+  // }, []);
 
   return (
     <ToastContainer position="top-center" style={{ marginTop: "1rem" }}>

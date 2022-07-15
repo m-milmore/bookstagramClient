@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import ImageCard from "../ImageCard/ImageCard";
-import DetailPage from "../DetailPage/DetailPage";
 
 const Books = ({ books }) => {
   return (
@@ -13,9 +12,6 @@ const Books = ({ books }) => {
           <div>No pictures...</div>
         )}
       </div>
-      {books.map((book) => (
-        <DetailPage book={book} key={book._id} />
-      ))}
     </div>
   );
 };

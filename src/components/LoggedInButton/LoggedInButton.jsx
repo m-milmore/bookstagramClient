@@ -5,7 +5,7 @@ import UpdateDetails from "../UpdateDetails/UpdateDetails";
 import UpdatePassword from "../UpdatePassword/UpdatePassword";
 import mapValues from "lodash/mapValues";
 
-const LoggedInButton = ({ name, toggleToast }) => {
+const LoggedInButton = ({ name }) => {
   const [modalManager, setModalManager] = useState({
     logoutModal: false,
     detailsModal: false,
@@ -26,6 +26,8 @@ const LoggedInButton = ({ name, toggleToast }) => {
   };
 
   const { logoutModal, detailsModal, passwordModal } = modalManager;
+  const fn = name.split(" ")[0];
+  const fnShorten = fn.length > 9 ? fn.slice(0, 8) + "." : fn;
 
   return (
     <>
@@ -37,7 +39,7 @@ const LoggedInButton = ({ name, toggleToast }) => {
           type="button"
           data-bs-toggle="dropdown"
         >
-          <i className="bi bi-person-fill"></i>&nbsp;Hello, {name.split(" ")[0]}
+          <i className="bi bi-person-fill"></i>&nbsp;Hello, {fnShorten}
         </button>
         <ul
           className="dropdown-menu"
@@ -73,17 +75,14 @@ const LoggedInButton = ({ name, toggleToast }) => {
       <UpdateDetails
         show={detailsModal}
         handleHide={handleHide}
-        toggleToast={toggleToast}
       />
       <UpdatePassword
         show={passwordModal}
         handleHide={handleHide}
-        toggleToast={toggleToast}
       />
       <LogoutPage
         show={logoutModal}
         handleHide={handleHide}
-        toggleToast={toggleToast}
       />
     </>
   );

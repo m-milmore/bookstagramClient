@@ -12,3 +12,5 @@ export const EYE_ICONS = {
 };
 
 export const CLIENT_URL = "http://localhost:3000";
+
+export const MAX_FILE_SIZE = 10485760; // 10MB, in uploadPage.jsx
