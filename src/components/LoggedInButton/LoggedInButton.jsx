@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
 import "./LoggedInButton.css";
 import LogoutPage from "../LogoutPage/LogoutPage";
 import UpdateDetails from "../UpdateDetails/UpdateDetails";
@@ -86,6 +87,14 @@ const LoggedInButton = ({ name }) => {
       />
     </>
   );
+};
+
+LoggedInButton.propTypes = {
+  name: PropTypes.string,
+};
+
+LoggedInButton.defaultProps = {
+  name: "",
 };
 
 export default LoggedInButton;

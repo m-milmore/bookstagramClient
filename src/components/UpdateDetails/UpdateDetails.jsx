@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
+import PropTypes from "prop-types";
 import { UserContext } from "../../App";
 import Modal from "react-bootstrap/Modal";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -106,5 +107,16 @@ const UpdateDetails = ({ show, handleHide }) => {
     </Modal>
   );
 };
+
+UpdateDetails.propTypes = {
+  show: PropTypes.bool,
+  handleHide: PropTypes.func,
+};
+
+UpdateDetails.defaultProps = {
+  show: false,
+  handleHide: () => {},
+};
+
 
 export default UpdateDetails;

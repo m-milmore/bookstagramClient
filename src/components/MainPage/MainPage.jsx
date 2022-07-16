@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useContext, useCallback } from "react";
 import { UserContext } from "../../App";
+import { EventEmitter } from "fbemitter";
 import orderBy from "lodash.orderby";
 import Navbar from "../Navbar/Navbar";
 import Alert from "../Alert/Alert";
 import Books from "../Books/Books";
-import { EventEmitter } from "fbemitter";
 import ConfirmationToast from "../ConfirmationToast/ConfirmationToast";
 
 export const appEmitter = new EventEmitter();
@@ -22,7 +22,7 @@ const MainPage = () => {
   const [toastMsg, setToastMsg] = useState("");
 
   useEffect(() => {
-    // need the 2 setLoading(false), both in try & catch, so the "no pictures" message doesn't show unnecessary
+    // need the 2 setLoading(false), in try & catch, so the "no pictures" message doesn't show unnecessary
     setLoading(true);
     bookService
       .getAllBooks()
@@ -30,7 +30,7 @@ const MainPage = () => {
         setBooks(orderBy(bookService.getBooks(), ["createAt"], ["asc"]));
         setLoading(false);
       })
-      .catch(() => {
+      .catch((error) => {
         setLoading(false);
         setError("Error loading images.");
       });

@@ -4,22 +4,23 @@ import LoginPage from "../LoginPage/LoginPage";
 import RegisterPage from "../RegisterPage/RegisterPage";
 import ForgotPassword from "../ForgotPassword/ForgotPassword";
 import mapValues from "lodash/mapValues";
+import "bootstrap/dist/js/bootstrap.bundle"; // for bootstrap dropdown
 
-const LoginSignupButton = ({ toggleToast }) => {
+const LoginSignupButton = () => {
   const [modalManager, setModalManager] = useState({
     loginModal: false,
     registerModal: false,
     forgotModal: false,
   });
 
-  const handleShow = (modal) => {
+  const handleShowModal = (modal) => {
     setModalManager({
       ...mapValues(modalManager, () => false),
       [modal]: true,
     });
   };
 
-  const handleHide = () => {
+  const handleHideModal = () => {
     setModalManager({
       ...mapValues(modalManager, () => false),
     });
@@ -36,6 +37,7 @@ const LoginSignupButton = ({ toggleToast }) => {
           id="login-dropdown"
           type="button"
           data-bs-toggle="dropdown"
+          aria-expanded="false"
         >
           Login/Signup
         </button>
@@ -46,7 +48,7 @@ const LoginSignupButton = ({ toggleToast }) => {
         >
           <li style={{ borderBottom: "1px solid grey" }}>
             <span
-              onClick={() => handleShow("loginModal")}
+              onClick={() => handleShowModal("loginModal")}
               className="dropdown-item"
             >
               SIGN IN
@@ -54,7 +56,7 @@ const LoginSignupButton = ({ toggleToast }) => {
           </li>
           <li style={{ borderBottom: "1px solid grey" }}>
             <span
-              onClick={() => handleShow("registerModal")}
+              onClick={() => handleShowModal("registerModal")}
               className="dropdown-item"
             >
               SIGN UP
@@ -64,19 +66,18 @@ const LoginSignupButton = ({ toggleToast }) => {
       </div>
       <LoginPage
         show={loginModal}
-        handleHide={handleHide}
-        handleShow={handleShow}
+        handleHide={handleHideModal}
+        handleShow={handleShowModal}
       />
       <RegisterPage
         show={registerModal}
-        handleHide={handleHide}
-        handleShow={handleShow}
+        handleHide={handleHideModal}
+        handleShow={handleShowModal}
       />
       <ForgotPassword
         show={forgotModal}
-        handleHide={handleHide}
-        handleShow={handleShow}
-        toggleToast={toggleToast}
+        handleHide={handleHideModal}
+        handleShow={handleShowModal}
       />
     </>
   );

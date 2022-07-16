@@ -76,11 +76,8 @@ export class AWSService {
           return data.Location;
         },
         (err) => {
-          alert(
-            "There was an error uploading your photo: ",
-            err.message
-          );
-          return err
+          alert("There was an error uploading your photo: ", err.message);
+          return err;
         }
       );
       return data;
@@ -103,8 +100,8 @@ export class AWSService {
 
     try {
       await s3.deleteObject(params, (err, data) => {
-        if (err) console.error(err, err.stack)
-        else console.log("Response : ", data)
+        if (err) console.error(err, err.stack);
+        else console.log("Response : ", data);
       });
       console.log("Book deleted on s3 successfully!");
     } catch (error) {

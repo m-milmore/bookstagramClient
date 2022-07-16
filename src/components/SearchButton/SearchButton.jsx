@@ -1,16 +1,17 @@
 import React from "react";
+import PropTypes from "prop-types";
 import "./SearchButton.css";
-import { Modal } from "bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import { appEmitter } from "../MainPage/MainPage";
 
 library.add(faMagnifyingGlass);
 
-const SearchButton = ({books}) => {
+const SearchButton = ({ books }) => {
   const products = books.map((book) => ({
     title: book.title,
-    id: book.id,
+    id: book._id,
   }));
   const [suggestions, setSuggestions] = React.useState([]);
   const [inputSearch, setInputSearch] = React.useState("");
@@ -28,10 +29,9 @@ const SearchButton = ({books}) => {
   };
 
   const suggestHandler = (suggestion) => {
-    const searchModal = new Modal(document.getElementById(suggestion.id), {});
+    appEmitter.emit("ImageCard", suggestion.id)
     setInputSearch(suggestion.title);
     setSuggestions([]);
-    searchModal.show();
   };
 
   const handleSearchButton = () => {
@@ -87,5 +87,14 @@ const SearchButton = ({books}) => {
     </div>
   );
 };
+
+SearchButton.propTypes = {
+  books: PropTypes.arrayOf(PropTypes.object),
+};
+
+SearchButton.defaultProps = {
+  books: [],
+};
+
 
 export default SearchButton;

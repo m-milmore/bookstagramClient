@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
+import PropTypes from "prop-types";
 import { UserContext } from "../../App";
 import Modal from "react-bootstrap/Modal";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -8,7 +9,7 @@ import { appEmitter } from "../MainPage/MainPage";
 
 const DetailPage = ({
   show,
-  handleClose,
+  handleCloseDetail,
   book: { _id, title, photo, user: ownerId },
 }) => {
   const { authService, bookService, appSetIsLoggedIn, awsService } =
@@ -79,7 +80,7 @@ const DetailPage = ({
           );
           appSetIsLoggedIn(false);
         });
-      handleClose();
+      handleCloseDetail();
     }
   };
 
@@ -117,11 +118,11 @@ const DetailPage = ({
           appSetIsLoggedIn(false);
         });
     }
-    handleClose();
+    handleCloseDetail();
   };
 
   return (
-    <Modal show={show} onHide={handleClose} centered>
+    <Modal show={show} onHide={handleCloseDetail} centered id={_id}>
       <Modal.Dialog className="px-3">
         <Modal.Header closeButton>
           <Modal.Title>
@@ -206,6 +207,18 @@ const DetailPage = ({
       </Modal.Dialog>
     </Modal>
   );
+};
+
+DetailPage.propTypes = {
+  show: PropTypes.bool,
+  handleCloseDetail: PropTypes.func,
+  book: PropTypes.object,
+};
+
+DetailPage.defaultProps = {
+  show: false,
+  handleCloseDetail: () => {},
+  book: {},
 };
 
 export default DetailPage;

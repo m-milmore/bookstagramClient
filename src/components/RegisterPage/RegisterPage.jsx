@@ -1,4 +1,5 @@
 import React, { useState, useContext } from "react";
+import PropTypes from "prop-types";
 import Modal from "react-bootstrap/Modal";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { UserContext } from "../../App";
@@ -126,6 +127,18 @@ const RegisterPage = ({ show, handleHide, handleShow }) => {
       </Modal.Dialog>
     </Modal>
   );
+};
+
+RegisterPage.propTypes = {
+  show: PropTypes.bool,
+  handleHide: PropTypes.func,
+  handleShow: PropTypes.func,
+};
+
+RegisterPage.defaultProps = {
+  show: false,
+  handleHide: () => {},
+  handleShow: () => {},
 };
 
 export default RegisterPage;

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./UploadLink.css";
 import UploadPage from "../UploadPage/UploadPage";
 
-const UploadLink = ({ toggleToast }) => {
+const UploadLink = () => {
   const [show, setShow] = useState(false);
 
   const handleShow = () => setShow(true);
@@ -19,7 +19,6 @@ const UploadLink = ({ toggleToast }) => {
       <UploadPage
         show={show}
         handleClose={handleClose}
-        toggleToast={toggleToast}
       />
     </>
   );

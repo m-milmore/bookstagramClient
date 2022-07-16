@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
+import PropTypes from "prop-types";
 import { UserContext } from "../../App";
 import Modal from "react-bootstrap/Modal";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -63,6 +64,16 @@ const LogoutPage = ({ show, handleHide }) => {
       </Modal.Dialog>
     </Modal>
   );
+};
+
+LogoutPage.propTypes = {
+  show: PropTypes.bool,
+  handleHide: PropTypes.func,
+};
+
+LogoutPage.defaultProps = {
+  show: false,
+  handleHide: () => {},
 };
 
 export default LogoutPage;

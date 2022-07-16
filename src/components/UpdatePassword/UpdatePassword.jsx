@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
+import PropTypes from "prop-types";
 import { UserContext } from "../../App";
 import Modal from "react-bootstrap/Modal";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -149,6 +150,16 @@ const UpdatePassword = ({ show, handleHide }) => {
       </Modal.Dialog>
     </Modal>
   );
+};
+
+UpdatePassword.propTypes = {
+  show: PropTypes.bool,
+  handleHide: PropTypes.func,
+};
+
+UpdatePassword.defaultProps = {
+  show: false,
+  handleHide: () => {},
 };
 
 export default UpdatePassword;

@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
+import PropTypes from "prop-types";
 import { UserContext } from "../../App";
 import Modal from "react-bootstrap/Modal";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -266,6 +267,16 @@ const UploadPage = ({ show, handleClose }) => {
       </Modal.Dialog>
     </Modal>
   );
+};
+
+UploadPage.propTypes = {
+  show: PropTypes.bool,
+  handleClose: PropTypes.func,
+};
+
+UploadPage.defaultProps = {
+  show: false,
+  handleClose: () => {},
 };
 
 export default UploadPage;

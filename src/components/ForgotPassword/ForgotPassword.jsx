@@ -1,4 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
+import PropTypes from "prop-types";
 import Modal from "react-bootstrap/Modal";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { UserContext } from "../../App";
@@ -84,6 +85,18 @@ const ForgotPassword = ({ show, handleHide, handleShow }) => {
       </Modal.Dialog>
     </Modal>
   );
+};
+
+ForgotPassword.propTypes = {
+  show: PropTypes.bool,
+  handleHide: PropTypes.func,
+  handleShow: PropTypes.func,
+};
+
+ForgotPassword.defaultProps = {
+  show: false,
+  handleHide: () => {},
+  handleShow: () => {},
 };
 
 export default ForgotPassword;

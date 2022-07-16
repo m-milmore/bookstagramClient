@@ -1,14 +1,30 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import PropTypes from "prop-types";
 import DetailPage from "../DetailPage/DetailPage";
+import { appEmitter } from "../MainPage/MainPage";
 
 const ImageCard = ({ book }) => {
-  const { title, photo } = book;
+  const { _id, title, photo } = book;
   const titleAdjusted = title.length > 23 ? title.slice(0, 19) + "..." : title;
 
   const [show, setShow] = useState(false);
 
-  const handleShow = () => setShow(true);
-  const handleClose = () => setShow(false);
+  const handleShowDetail = () => setShow(true);
+  const handleCloseDetail = () => setShow(false);
+
+  useEffect(() => {
+    const onImageCard = (bookId) => {
+      if (bookId === _id) {
+        handleShowDetail();
+      }
+    };
+
+    const imageCardListener = appEmitter.addListener("ImageCard", onImageCard);
+
+    return () => {
+      imageCardListener.remove();
+    };
+  }, [_id]);
 
   return (
     <>
@@ -18,7 +34,7 @@ const ImageCard = ({ book }) => {
           role="button"
           // data-bs-toggle="modal"
           // data-bs-target={`#id${_id}`}
-          onClick={handleShow}
+          onClick={handleShowDetail}
         >
           <div className="card-header border">Featured</div>
           <div className="card-body my-0 px-0">
@@ -34,9 +50,17 @@ const ImageCard = ({ book }) => {
           </div>
         </div>
       </div>
-      <DetailPage show={show} handleClose={handleClose} book={book} />
+      <DetailPage show={show} handleCloseDetail={handleCloseDetail} book={book} />
     </>
   );
+};
+
+ImageCard.propTypes = {
+  books: PropTypes.arrayOf(PropTypes.object),
+};
+
+ImageCard.defaultProps = {
+  books: [],
 };
 
 export default ImageCard;

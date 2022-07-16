@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import "./InputBase.css";
 import LabelErrorContainer from "./LabelErrorContainer";
 
@@ -33,5 +34,25 @@ class InputBase extends React.Component {
     );
   }
 }
+
+InputBase.propTypes = {
+  label: PropTypes.string,
+  error: PropTypes.string,
+  typeIs: PropTypes.string,
+  handleEyeIcon: PropTypes.func,
+  eyeIcon: PropTypes.string,
+  placeholder: PropTypes.string,
+  htmlFor: PropTypes.string,
+};
+
+InputBase.defaultProps = {
+  label: "",
+  error: "",
+  typeIs: "",
+  handleEyeIcon: () => {},
+  eyeIcon: "",
+  placeholder: "",
+  htmlFor: "",
+};
 
 export default InputBase;
