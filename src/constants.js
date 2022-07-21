@@ -11,6 +11,6 @@ export const EYE_ICONS = {
   HIDE: EYE_ICON_HIDE,
 };
 
-export const CLIENT_URL = "http://localhost:3000";
+export const CLIENT_URL = process.env.REACT_APP_CLIENT_URL;
 
 export const MAX_FILE_SIZE = 10485760; // 10MB, in uploadPage.jsx
