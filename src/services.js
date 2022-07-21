@@ -285,6 +285,7 @@ export class BookService extends AuthService {
   }
 
   async getAllBooks() {
+    console.log(URL_BOOKS)
     try {
       const response = await axios.get(URL_BOOKS, {
         headers,

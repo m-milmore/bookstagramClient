@@ -96,6 +96,7 @@ const UploadPage = ({ show, handleClose }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const { title, files } = uploadInfo;
+    console.log(files)
     setError("");
     if (
       bookService.books.find(
@@ -110,65 +111,66 @@ const UploadPage = ({ show, handleClose }) => {
         `Please upload an image less than ${MAX_FILE_SIZE / 1024 / 1024} MB.`
       );
     } else {
-      setLoading(true);
-      authService
-        .findUserByEmail()
-        .then(() => {
-          bookService
-            .checkMimeType(files)
-            .then(() => {
-              awsService
-                .addPhoto(files)
-                .then((data) => {
-                  bookService
-                    .uploadBook(title, data)
-                    .then(() => {
-                      setProgress(0);
-                      handleClose();
-                      appEmitter.emit(
-                        "toast",
-                        "Book info successfully uploaded."
-                      );
-                      bookService
-                        .getAllBooks()
-                        .then(() => {
-                          appEmitter.emit("newBookUpdate", "newBookUpdate");
-                        })
-                        .catch((error) => {
-                          setError("Error loading images.");
-                        });
-                    })
-                    .catch((error) => {
-                      console.log(error.response.data.error);
-                      setError(
-                        "Error uploading book info to the server. Please try again."
-                      );
-                    });
-                })
-                .catch((error) => {
-                  console.error(error);
-                  setError(
-                    "Error uploading book info in s3. Please try again."
-                  );
-                });
-            })
-            .catch((error) => {
-              console.log("error");
-              setError("Please upload an image file.");
-            });
-        })
-        .catch((error) => {
-          console.log(error.response.data.error);
-          appEmitter.emit(
-            "toast",
-            "Unauthorized or expired token. Please sign in again."
-          );
-          appSetIsLoggedIn(false);
-          setError(
-            "Error uploading book info to the server. Please try again."
-          );
-        });
-      setLoading(false);
+      console.log("Continue with the rest...");
+      // setLoading(true);
+      // authService
+      //   .findUserByEmail()
+      //   .then(() => {
+      //     bookService
+      //       .checkMimeType(files)
+      //       .then(() => {
+      //         awsService
+      //           .addPhoto(files)
+      //           .then((data) => {
+      //             bookService
+      //               .uploadBook(title, data)
+      //               .then(() => {
+      //                 setProgress(0);
+      //                 handleClose();
+      //                 appEmitter.emit(
+      //                   "toast",
+      //                   "Book info successfully uploaded."
+      //                 );
+      //                 bookService
+      //                   .getAllBooks()
+      //                   .then(() => {
+      //                     appEmitter.emit("newBookUpdate", "newBookUpdate");
+      //                   })
+      //                   .catch((error) => {
+      //                     setError("Error loading images.");
+      //                   });
+      //               })
+      //               .catch((error) => {
+      //                 console.log(error.response.data.error);
+      //                 setError(
+      //                   "Error uploading book info to the server. Please try again."
+      //                 );
+      //               });
+      //           })
+      //           .catch((error) => {
+      //             console.error(error);
+      //             setError(
+      //               "Error uploading book info in s3. Please try again."
+      //             );
+      //           });
+      //       })
+      //       .catch((error) => {
+      //         console.log("error");
+      //         setError("Please upload an image file.");
+      //       });
+      //   })
+      //   .catch((error) => {
+      //     console.log(error.response.data.error);
+      //     appEmitter.emit(
+      //       "toast",
+      //       "Unauthorized or expired token. Please sign in again."
+      //     );
+      //     appSetIsLoggedIn(false);
+      //     setError(
+      //       "Error uploading book info to the server. Please try again."
+      //     );
+      //   });
+      // setLoading(false);
     }
   };
 
