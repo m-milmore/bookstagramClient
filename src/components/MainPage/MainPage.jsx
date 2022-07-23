@@ -32,6 +32,7 @@ const MainPage = () => {
       })
       .catch((error) => {
         setLoading(false);
+        console.log("Error loading all books: ", error)
         setError("Error loading images.");
       });
   }, [bookService]);
