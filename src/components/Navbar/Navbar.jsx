@@ -13,6 +13,7 @@ const Navbar = ({ books }) => {
     useContext(UserContext);
 
   useEffect(() => {
+    console.log("isLoggedIn = ", isLoggedIn, ", persist = ", persist);
     if (!isLoggedIn && persist) {
       authService
         .refresh()
