@@ -27,6 +27,7 @@ const LoginPage = ({ show, handleHide, handleShow }) => {
 
   useEffect(() => {
     localStorage.setItem("persist", persist);
+    console.log("persist = ", persist)
   }, [persist]);
 
   const handleChange = ({ target: { name, value } }) => {
