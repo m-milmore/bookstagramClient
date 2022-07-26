@@ -135,6 +135,7 @@ const UploadPage = ({ show, handleClose }) => {
                           appEmitter.emit("newBookUpdate", "newBookUpdate");
                         })
                         .catch((error) => {
+                          console.log(error)
                           setError("Error loading images.");
                         });
                     })
