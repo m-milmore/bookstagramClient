@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import PropTypes from "prop-types";
 import Modal from "react-bootstrap/Modal";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -8,7 +8,8 @@ import InputBase from "../InputBase/InputBase";
 import Alert from "../Alert/Alert";
 
 const RegisterPage = ({ show, handleHide, handleShow }) => {
-  const { authService, appSetIsLoggedIn } = useContext(UserContext);
+  const { authService, appSetIsLoggedIn, setPersist, persist } =
+    useContext(UserContext);
 
   const [userLogins, setUserLogins] = useState({
     name: "Bob Beeman",
@@ -24,6 +25,11 @@ const RegisterPage = ({ show, handleHide, handleShow }) => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
+  useEffect(() => {
+    localStorage.setItem("persist", persist);
+    console.log("persist = ", persist);
+  }, [persist]);
+
   const handleChange = ({ target: { name, value } }) => {
     setUserLogins({ ...userLogins, [name]: value });
   };
@@ -38,6 +44,10 @@ const RegisterPage = ({ show, handleHide, handleShow }) => {
           passwordType: "text",
           eyeIcon: EYE_ICONS["HIDE"],
         });
+  };
+
+  const togglePersist = () => {
+    setPersist(!persist);
   };
 
   const handleSubmit = (e) => {
@@ -110,6 +120,16 @@ const RegisterPage = ({ show, handleHide, handleShow }) => {
               className="submit-button"
               value="sign up"
             />
+            <div className="persistCheck">
+              <input
+                type="checkbox"
+                name="persist"
+                onChange={togglePersist}
+                checked={persist}
+                id="persist"
+              />
+              <label htmlFor="persist">Trust This Device</label>
+            </div>
           </form>
           <div className="footer-text">
             <div>
